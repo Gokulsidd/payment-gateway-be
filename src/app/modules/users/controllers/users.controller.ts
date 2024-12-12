@@ -2,11 +2,15 @@ import { Body, Controller, Delete, Get, Param, Patch, Post, Version } from "@nes
 import { CreateUserDto } from "../dto/create-user.dto";
 import { UsersService } from "../services/users.service";
 import { UpdateUserDto } from "../dto/update-user.dto";
+import { skipAuth } from "src/core/decorators/auth.decorator";
+import { Roles } from "src/core/decorators/role.decorators";
+import { Role } from "src/core/utils/roles";
 
 @Controller('users')
 export class UsersController {
     constructor(private readonly usersService: UsersService) {}
-
+    
+    @skipAuth()
     @Post()
     async create(@Body() createUserDto: CreateUserDto) {
         return await this.usersService.create(createUserDto)
@@ -33,6 +37,7 @@ export class UsersController {
     }
 
     @Delete(':id')
+    @Roles(Role.Admin)
     async remove(@Param('id') id: string) {
         return await this.usersService.remove(id);
     }
