@@ -1,11 +1,25 @@
-import { PartialType } from "@nestjs/mapped-types";
-import { CreateClientDto } from "./create-client.dto";
+import { IsDate, IsOptional, IsString } from "class-validator";
 import { UpdateDateColumn } from "typeorm";
-import { IsDate, IsOptional } from "class-validator";
 
-export class UpdateClientDto extends PartialType(CreateClientDto) {
+export class UpdateClientDto {
+    @IsString()
+    @IsOptional()
+    email?: string;
+  
+    @IsString()
+    @IsOptional()
+    business_name?: string;
+  
+    @IsString()
+    @IsOptional()
+    webhook_url?: string;
+
+    @IsString()
+    @IsOptional()
+    name?: string;
+
     @UpdateDateColumn()
     @IsOptional()
     @IsDate()
     updated_at: string
-}
+  }
