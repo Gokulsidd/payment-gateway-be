@@ -11,6 +11,7 @@ import { JwtAuthMiddleware } from 'src/core/middlewares/jwt-auth.middleware';
 import { JwtModule } from '@nestjs/jwt';
 import { AuthController } from './modules/auth/controllers/auth.controller';
 import { UsersController } from './modules/users/controllers/users.controller';
+import { ClientModule } from './modules/clients/clients.module';
 
 @Module({
   imports: [
@@ -24,6 +25,7 @@ import { UsersController } from './modules/users/controllers/users.controller';
     UsersModule,
     AuthModule,
     JwtModule,
+    ClientModule
   ],
   controllers: [AppController],
   providers: [
@@ -45,6 +47,7 @@ export class AppModule {
       .exclude(
         { path: 'auth/login', method: RequestMethod.POST },
         { path: 'auth/register', method: RequestMethod.POST },
+        { path: 'auth/register-admin', method: RequestMethod.POST },
       )
       .forRoutes('*');
   }

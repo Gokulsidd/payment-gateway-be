@@ -12,6 +12,14 @@ export class signUpDto {
 
     @IsNotEmpty()
     @IsString()
+    business_name: string;
+
+    @IsNotEmpty()
+    @IsString()
+    webhook_url: string;
+
+    @IsNotEmpty()
+    @IsString()
     password: string;
 
     @IsOptional()

@@ -21,4 +21,13 @@ export class AuthController {
     async signUp(@Body() signUpDto: signUpDto) {
         return await this.authService.signUp(signUpDto)
     }
+
+    @skipAuth()
+    @HttpCode(HttpStatus.OK)
+    @Post('register-admin')
+    async signUpAdmin(@Body() signUpDto: signUpDto) {
+        return await this.authService.signUpAdmin(signUpDto)
+    }
+
+    
 }

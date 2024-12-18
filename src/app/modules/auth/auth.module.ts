@@ -7,9 +7,14 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { APP_GUARD } from '@nestjs/core';
 import { AuthGuard } from 'src/core/guards/auth.guard';
 import { JwtAuthMiddleware } from 'src/core/middlewares/jwt-auth.middleware';
+import { ClientServices } from '../clients/services/client.service';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { User } from '../users/entities/user.entity';
+import { Client } from '../clients/entities/client.entity';
 
 @Module({
   imports: [
+    TypeOrmModule.forFeature([User, Client]),
     UsersModule,
     JwtModule.registerAsync({
       imports: [ConfigModule],
@@ -28,7 +33,7 @@ import { JwtAuthMiddleware } from 'src/core/middlewares/jwt-auth.middleware';
     }),
   ],
   controllers: [AuthController],
-  providers: [AuthService,
+  providers: [AuthService,ClientServices,
     JwtModule,
     {
         provide: APP_GUARD,
@@ -44,6 +49,7 @@ export class AuthModule implements NestModule {
       .exclude(
         { path: 'auth/login', method: RequestMethod.POST }, 
         { path: 'auth/register', method: RequestMethod.POST }, 
+        { path: 'auth/register-admin', method: RequestMethod.POST }, 
       )
       .forRoutes('*'); 
   }
